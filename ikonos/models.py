@@ -1,4 +1,4 @@
-from app import db
+from ikonos import db
 
 
 class Enquiry(db.Model):
