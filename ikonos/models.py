@@ -1,3 +1,4 @@
+from datetime import datetime
 from ikonos import db
 
 
@@ -9,6 +10,7 @@ class Enquiry(db.Model):
     first_name = db.Column(db.String())
     last_name = db.Column(db.String())
     message = db.Column(db.String())
+    time_created = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __init__(self, email, first_name, last_name, message):
         self.email = email

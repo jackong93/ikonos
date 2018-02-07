@@ -1,7 +1,7 @@
 from flask import render_template, request
-from ikonos import app, db
+from ikonos import app
 # from ikonos.worker import conn
-from ikonos.models import Enquiry
+from ikonos.utils.enquiry import insert_to_enquiry
 # from rq import Queue
 # from rq.job import Job
 
@@ -24,14 +24,11 @@ def index():
             "last_name": last_name,
             "message": message
         }
-
-        enquiry = Enquiry(
+        insert_to_enquiry(
             email=email,
             first_name=first_name,
             last_name=last_name,
             message=message
         )
-        db.session.add(enquiry)
-        db.session.commit()
 
     return render_template('index.html', results=results)
