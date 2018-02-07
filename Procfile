@@ -1,1 +1,1 @@
-web: gunicorn run:ikonos
+web: gunicorn run:app
