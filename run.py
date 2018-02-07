@@ -1,3 +1,3 @@
 #!flask/bin/python
-from app import app
+from ikonos import app
 app.run()
