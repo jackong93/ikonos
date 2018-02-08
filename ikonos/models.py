@@ -1,8 +1,17 @@
+from collections import OrderedDict
 from datetime import datetime
 from ikonos import db
 
 
-class Enquiry(db.Model):
+class DictSerializable(object):
+    def _asdict(self):
+        result = OrderedDict()
+        for key in self.__mapper__.c.keys():
+            result[key] = getattr(self, key)
+        return result
+
+
+class Enquiry(db.Model, DictSerializable):
     __tablename__ = 'enquiries'
 
     id = db.Column(db.Integer, primary_key=True)

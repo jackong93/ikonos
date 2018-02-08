@@ -11,3 +11,4 @@ def insert_to_enquiry(email, first_name, last_name, message):
     )
     db.session.add(enquiry)
     db.session.commit()
+    return enquiry.id
