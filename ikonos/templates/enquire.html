@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="Enquire">
+    <head>
+        <title>Ikonos</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <style>
+            .container {
+                max-width: 1000px;
+            }
+        </style>
+    </head>
+    <body ng-controller="EnquiryController">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 col-sm-offset-1">
+                    <h1>Contact Us</h1>
+                    <form role="form" ng-submit="submitEnquiry()">
+                        <div class="form-group">
+                            <input type="email" ng-model="email" name="email" class="form-control" id="email-box" placeholder="Email" style="max-width: 300px;" autofocus required>
+                            <br>
+                            <input type="text" ng-model="firstName" name="first-name" class="form-control" id="first-name-box" placeholder="First Name" style="max-width: 300px;" required>
+                            <br>
+                            <input type="text" ng-model="lastName" name="last-name" class="form-control" id="last-name-box" placeholder="Last Name" style="max-width: 300px;" required>
+                            <br>
+                            <input type="text" ng-model="message" name="msg" class="form-control" id="msg-box" placeholder="Message" style="max-width: 300px;" required>
+                        </div>
+                        {% raw %}
+                           <button type="submit" class="btn btn-primary" ng-disabled="loading">{{ submitButtonText }}</button>
+                        {% endraw %}
+                    </form>
+                </div>
+                <div class="col-sm-5 col-sm-offset-1">
+                    <div id="enquiryDetails">
+                        <table class="table table-striped">
+                            <tbody>
+                            {% raw %}
+                                <tr ng-repeat="(key, val) in enquiryDetails">
+                                    <td>{{key}}</td>
+                                    <td>{{val}}</td>
+                                </tr>
+                            {% endraw %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <img class="col-sm-3 col-sm-offset-4" src="{{ url_for('static', filename='spinner.gif') }}" ng-show="loading">
+                </div>
+            </div>
+        </div>
+        <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <script src="{{ url_for('static', filename='enquire.js') }}"></script>
+    </body>
+</html>
