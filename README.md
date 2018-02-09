@@ -33,10 +33,15 @@ export REDISTOGO_URL="redis://localhost:6379"
 export PYTHONPATH=$PYTHONPATH:$PWD/ikonos
 ```
 9. Open up three terminal windows
-    a. In the first, run `redis-server`
+    * In the first, run `redis-server`
         * If your redis server is not running on port `6379`, please update the `REDISTOGO_URL` variable accordingly
-    b. In the second, run `python ikonos/worker.py`
-    c. In the third, run `python manage.py runserver`
+    * In the second, run `python ikonos/worker.py`
+    * In the third, run `python manage.py runserver`
+
+10. If there is any changes to the `models.py` file, an upgrade to the database is needed
+```bash
+$ python manage.py db upgrade
+```
 
 
 ## CONTRIBUTION
