@@ -15,6 +15,12 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/demo', methods=['GET', 'POST'])
+def demo():
+    # return render_template('demo.html')
+    return "Coming soon..."
+
+
 @app.route('/enquire', methods=['GET', 'POST'])
 def enquire():
     if request.method == 'POST':
