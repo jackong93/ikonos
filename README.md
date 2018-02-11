@@ -32,13 +32,16 @@ export DATABASE_URL="postgresql://localhost/landsat_dev"
 export REDISTOGO_URL="redis://localhost:6379"
 export PYTHONPATH=$PYTHONPATH:$PWD/ikonos
 ```
-9. Open up three terminal windows
+
+
+## Running local server
+1. Open up three terminal windows
     * In the first, run `redis-server`
         * If your redis server is not running on port `6379`, please update the `REDISTOGO_URL` variable accordingly
     * In the second, run `python ikonos/worker.py`
     * In the third, run `python manage.py runserver`
 
-10. If there is any changes to the `models.py` file, an upgrade to the database is needed
+2. If there is any changes to the `models.py` file, an upgrade to the database is needed
 ```bash
 $ python manage.py db upgrade
 ```
@@ -76,3 +79,31 @@ We follow [PEP8 styleguide](https://www.python.org/dev/peps/pep-0008/) using the
                    
 Currently deployment to Heroku is only possible with Jack's Heroku account and credentials.
 Please work with Jack on Heroku deployment.
+
+### Own heroku deployment
+
+1. Install Heroku [Toolbelt](https://devcenter.heroku.com/articles/heroku-cli)
+2. In terminal, run `heroku login`
+    * You need to also set up your rsa pub key
+3. Create an app on heroku `heroku create APP_NAME`
+4. Add the app to a remote branch for the repo `git remote add REMOTE_NAME git@heroku.com:APP_NAME.git`
+5. Push code to the APP `git push REMOTE_NAME master`
+6. (Optional) In `config.py`, create a new class for your app's config
+7. Set up the following environment variables for your heroku app
+```bash
+$ heroku config:set APP_SETTINGS=config.CONFIG_CLASS_NAME --remote REMOTE_NAME
+```
+8. Add on postgres in your heroku app and run database migration
+```bash
+$ heroku addons:create heroku-postgresql:hobby-dev --app APP_NAME
+$ heroku run python manage.py db upgrade --app APP_NAME
+```
+9. Add on redis in your heroku app and add it into the environment
+```bash
+$ heroku addons:create redistogo:nano --app APP_NAME
+$ heroku config --app APP_NAME | grep REDISTOGO_URL
+```
+10. Run `heroku config --app APP_NAME` and ensure that you see the following three environment variables set up correctly
+    * APP_SETTINGS: config.CONFIG_CLASS_NAME
+    * DATABASE_URL: POSTGRES_URL_STARTING_WITH_postgres://
+    * REDISTOGO_URL: REDIS_URL_STARTING_WITH_redis://
