@@ -13,11 +13,11 @@ Backend setup for project AG
 5. Once Postgres is installed and running, create database named `landsat_dev`
 ```bash
 $ psql
-# create database wordcount_dev;
+# create database landsar_dev;
 CREATE DATABASE
 # \q
 ```
-6. Run the followings to set up the database
+6. Run the following to set up the database
 ```bash
 $ python manage.py db init
 $ python manage.py db migrate
@@ -25,7 +25,7 @@ $ python manage.py db upgrade
 ```
 7. Install Redis via Homebrew `brew install redis`
 
-8. Add the followings environment variables
+8. Add the following environment variables
 ```bash
 export APP_SETTINGS="config.DevelopmentConfig"
 export DATABASE_URL="postgresql://localhost/landsat_dev"
